@@ -16,6 +16,7 @@ namespace PatientManagementApp.Migrations
                         NumberOfRepetitions = c.Int(nullable: false),
                         Angle = c.Int(nullable: false),
                         Duration = c.DateTime(nullable: false),
+                        PatientId = c.String(),
                         Patient_Id = c.Int(),
                     })
                 .PrimaryKey(t => t.Id)
@@ -31,6 +32,7 @@ namespace PatientManagementApp.Migrations
                         LastName = c.String(),
                         Pesel = c.String(),
                         Description = c.String(),
+                        UserId = c.String(),
                         ApplicationUser_Id = c.String(maxLength: 128),
                     })
                 .PrimaryKey(t => t.Id)

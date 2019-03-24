@@ -10,5 +10,6 @@ namespace PatientManagementApp.Models
         public int Angle { get; set; }
         public DateTime Duration { get; set; }
         public Patient Patient { get; set; }
+        public string PatientId { get; set; }
     }
 }

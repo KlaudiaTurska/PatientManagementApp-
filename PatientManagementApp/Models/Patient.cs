@@ -10,6 +10,7 @@ namespace PatientManagementApp.Models
         public string Pesel { get; set; }
         public string Description { get; set; }
         public ApplicationUser ApplicationUser { get; set; }
+        public string UserId { get; set; }
         public IEnumerable<Exercise> Exercises { get; set; }
     }
 }

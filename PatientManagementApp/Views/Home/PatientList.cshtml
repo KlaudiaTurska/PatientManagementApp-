@@ -1,0 +1,42 @@
+﻿@model IEnumerable<PatientManagementApp.Models.Patient>
+
+@{
+    ViewBag.Title = "Lista Pacjentów";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista pacjentów</h2>
+<p class="btn btn-default p-2">
+    @Html.ActionLink("Dodaj pacjenta", "AddPatient")
+</p>
+<table class="table">
+    <tr>
+        <th>Imię</th>
+        <th>Nazwisko</th>
+        <th>Pesel</th>
+        <th>Opis</th>
+        <th>Edycja</th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Name)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Pesel)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.ActionLink("Edycja", "EditPatient", new { id=item.Id }) |
+            @Html.ActionLink("Szczegóły", "Details", new { id=item.Id }) |
+            @Html.ActionLink("Usuń", "Delete", new { id=item.Id })
+        </td>
+    </tr>
+}
+</table>
