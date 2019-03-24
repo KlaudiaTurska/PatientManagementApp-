@@ -81,6 +81,7 @@ namespace PatientManagementApp.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EditPatient(PatientViewModel patientViewModel)
         {
             if (ModelState.IsValid)
@@ -100,6 +101,20 @@ namespace PatientManagementApp.Controllers
             return View(patientViewModel);
         }
         
+        public ActionResult DeletePatient(int id)
+        {
+            var patient = patientRepository.GetPatientById(id);
+
+            var exercises = exerciseRepository.GetAllPatientExercises(patient.Id);
+            //Usuwanie wszystkich cwiczeń dla pacjenta
+            exerciseRepository.DeleteExercises(exercises);
+            exerciseRepository.Complete();
+
+            patientRepository.DeletePatient(patient);
+            patientRepository.Complete();
+            return RedirectToAction("PatientList");
+        }
+        
         public ActionResult PatientList()
         {
             var userId = User.Identity.GetUserId();
@@ -108,10 +123,116 @@ namespace PatientManagementApp.Controllers
             return View(patients);
         }
 
-        public ActionResult PatientExersicesList()
+        public ActionResult PatientExersicesList(int patientId)
         {
+            var userId = User.Identity.GetUserId();
             //Wyciąganięcie listy ćwiczeń dla danego pacjenta
+            var exercises = exerciseRepository.GetAllPatientExercises(patientId);
+
+            //Uzupełnienie kontenera id pacjenta oraz utworzenie listy
+            ExerciseContainerViewModel exerciseContainer = new ExerciseContainerViewModel()
+            {
+                PatientId = patientId,
+                Exercises = new List<ExerciseViewModel>()
+            };
+
+            //Wypełnienie listy ćwiczeniami
+            foreach(var exercise in exercises)
+            {
+                exerciseContainer.Exercises.Add(new ExerciseViewModel()
+                {
+                    Id = exercise.Id,
+                    Angle = exercise.Angle,
+                    Description = exercise.Description,
+                    Duration = exercise.Duration,
+                    NumberOfRepetitions = exercise.NumberOfRepetitions,
+                    PatientId = patientId
+                });
+            }
+
+            return View(exerciseContainer);
+        }
+
+        [HttpGet]
+        public ActionResult AddExercise(int patientId)
+        {
+            var exercise = new ExerciseViewModel()
+            {
+                PatientId = patientId,
+            };
+            return View(exercise);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AddExercise(ExerciseViewModel exerciseViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var patient = patientRepository.GetPatientById(exerciseViewModel.PatientId);
+
+                exerciseRepository.AddExercise(new Exercise()
+                {
+                    Angle = exerciseViewModel.Angle,
+                    Description = exerciseViewModel.Description,
+                    Duration = exerciseViewModel.Duration,
+                    NumberOfRepetitions = exerciseViewModel.NumberOfRepetitions,
+                    PatientId = exerciseViewModel.PatientId,
+                    Patient = patient
+                });
+
+                exerciseRepository.Complete();
+
+                return RedirectToAction("PatientExersicesList", new { patientId = exerciseViewModel.PatientId });
+            }
+
             return View();
+        }
+
+        [HttpGet]
+        public ActionResult EditExercise(int id)
+        {
+            var exercise = exerciseRepository.GetExerciseById(id);
+            var exerciseViewModel = new ExerciseViewModel()
+            {
+                Id = exercise.Id,
+                Description = exercise.Description,
+                Angle = exercise.Angle,
+                Duration = exercise.Duration,
+                PatientId = exercise.PatientId,
+                NumberOfRepetitions = exercise.NumberOfRepetitions,               
+            };
+
+            return View(exerciseViewModel);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditExercise(ExerciseViewModel exerciseViewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                var exercise = exerciseRepository.GetExerciseById(exerciseViewModel.Id);
+
+                exercise.NumberOfRepetitions = exerciseViewModel.NumberOfRepetitions;
+                exercise.Angle = exerciseViewModel.Angle;
+                exercise.Duration = exerciseViewModel.Duration;
+                exercise.Description = exerciseViewModel.Description;
+
+                return RedirectToAction("PatientExersicesList", new { patientId = exerciseViewModel.PatientId});
+            }
+
+            return View(exerciseViewModel);
+        }
+
+        public ActionResult DeleteExercise(int id, int patientId)
+        {
+            var exercise = exerciseRepository.GetExerciseById(id);
+
+            exerciseRepository.DeleteExercise(exercise);
+            exerciseRepository.Complete();
+
+            return RedirectToAction("PatientExersicesList", new { patientId });
         }
     }
 }

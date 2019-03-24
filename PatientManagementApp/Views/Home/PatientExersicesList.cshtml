@@ -1,0 +1,43 @@
+﻿@model PatientManagementApp.ViewModels.ExerciseContainerViewModel
+
+@{
+    ViewBag.Title = "PatientExersicesList";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Lista ćwiczeń pacjenta</h2>
+
+<p class="btn btn-default p-2">
+    @Html.ActionLink("Dodaj nowe ćwiczenie", "AddExercise", new { patientId = Model.PatientId})
+</p>
+<table class="table">
+    <tr>
+        <th>Opis</th>
+        <th>Liczba powtórzeń</th>
+        <th>Kąt</th>
+        <th>Czas trwania (min)</th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model.Exercises) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.Description)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.NumberOfRepetitions)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Angle)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Duration)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "EditExercise", new { id=item.Id }) |
+            @Html.ActionLink("Usuń", "DeleteExercise", new { id=item.Id, patientId = Model.PatientId })
+        </td>
+    </tr>
+}
+
+</table>

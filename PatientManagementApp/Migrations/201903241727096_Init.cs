@@ -16,12 +16,11 @@ namespace PatientManagementApp.Migrations
                         NumberOfRepetitions = c.Int(nullable: false),
                         Angle = c.Int(nullable: false),
                         Duration = c.DateTime(nullable: false),
-                        PatientId = c.String(),
-                        Patient_Id = c.Int(),
+                        PatientId = c.Int(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
-                .ForeignKey("dbo.Patients", t => t.Patient_Id)
-                .Index(t => t.Patient_Id);
+                .ForeignKey("dbo.Patients", t => t.PatientId, cascadeDelete: true)
+                .Index(t => t.PatientId);
             
             CreateTable(
                 "dbo.Patients",
@@ -112,7 +111,7 @@ namespace PatientManagementApp.Migrations
         public override void Down()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");
-            DropForeignKey("dbo.Exercises", "Patient_Id", "dbo.Patients");
+            DropForeignKey("dbo.Exercises", "PatientId", "dbo.Patients");
             DropForeignKey("dbo.AspNetUserRoles", "UserId", "dbo.AspNetUsers");
             DropForeignKey("dbo.Patients", "ApplicationUser_Id", "dbo.AspNetUsers");
             DropForeignKey("dbo.AspNetUserLogins", "UserId", "dbo.AspNetUsers");
@@ -124,7 +123,7 @@ namespace PatientManagementApp.Migrations
             DropIndex("dbo.AspNetUserClaims", new[] { "UserId" });
             DropIndex("dbo.AspNetUsers", "UserNameIndex");
             DropIndex("dbo.Patients", new[] { "ApplicationUser_Id" });
-            DropIndex("dbo.Exercises", new[] { "Patient_Id" });
+            DropIndex("dbo.Exercises", new[] { "PatientId" });
             DropTable("dbo.AspNetRoles");
             DropTable("dbo.AspNetUserRoles");
             DropTable("dbo.AspNetUserLogins");

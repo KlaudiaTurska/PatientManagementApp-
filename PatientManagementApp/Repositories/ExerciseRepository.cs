@@ -20,21 +20,34 @@ namespace PatientManagementApp.Repositories
             context.SaveChanges();
         }
 
+        //Dodawanie ćwiczeń
         public void AddExercise(Exercise exercise)
         {
             context.Exercises.Add(exercise);
         }
 
+        //Usuwanie ćwiczenia
         public void DeleteExercise(Exercise exercise)
         {
             context.Exercises.Remove(exercise);
         }
 
-        public IEnumerable<Exercise> GetAllPatientExercises(string pesel)
+        //Usuwanie ćwiczeń
+        public void DeleteExercises(IEnumerable<Exercise> exercises)
         {
-            return context.Exercises
-                    .Where(u => u.Patient.Pesel == pesel)
-                    .ToList();
+            context.Exercises.RemoveRange(exercises);
+        }
+
+        //Wyszukaj ćwiczenie na podstawie id
+        public Exercise GetExerciseById(int id)
+        {
+            return context.Exercises.Where(p => p.Id == id).FirstOrDefault();
+        }
+
+        //Zwróc wszystkie ćwiczenia dla danego pacjenta
+        public IEnumerable<Exercise> GetAllPatientExercises(int id)
+        {
+            return context.Exercises.Where(u => u.Patient.Id == id).ToList();
         }
     }
 }
