@@ -11,5 +11,6 @@ namespace PatientManagementApp.Models
         public DateTime Duration { get; set; }
         public Patient Patient { get; set; }
         public int PatientId { get; set; }
+        public string AdditionalInformation { get; internal set; }
     }
 }

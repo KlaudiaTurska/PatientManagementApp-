@@ -146,7 +146,8 @@ namespace PatientManagementApp.Controllers
                     Description = exercise.Description,
                     Duration = exercise.Duration,
                     NumberOfRepetitions = exercise.NumberOfRepetitions,
-                    PatientId = patientId
+                    PatientId = patientId,
+                    AdditionalInformations = exercise.AdditionalInformation
                 });
             }
 
@@ -178,7 +179,8 @@ namespace PatientManagementApp.Controllers
                     Duration = exerciseViewModel.Duration,
                     NumberOfRepetitions = exerciseViewModel.NumberOfRepetitions,
                     PatientId = exerciseViewModel.PatientId,
-                    Patient = patient
+                    Patient = patient,
+                    AdditionalInformation = exerciseViewModel.AdditionalInformations
                 });
 
                 exerciseRepository.Complete();
@@ -200,7 +202,8 @@ namespace PatientManagementApp.Controllers
                 Angle = exercise.Angle,
                 Duration = exercise.Duration,
                 PatientId = exercise.PatientId,
-                NumberOfRepetitions = exercise.NumberOfRepetitions,               
+                NumberOfRepetitions = exercise.NumberOfRepetitions,
+                AdditionalInformations = exercise.AdditionalInformation
             };
 
             return View(exerciseViewModel);
@@ -218,6 +221,9 @@ namespace PatientManagementApp.Controllers
                 exercise.Angle = exerciseViewModel.Angle;
                 exercise.Duration = exerciseViewModel.Duration;
                 exercise.Description = exerciseViewModel.Description;
+                exercise.AdditionalInformation = exerciseViewModel.AdditionalInformations;
+
+                exerciseRepository.Complete();
 
                 return RedirectToAction("PatientExersicesList", new { patientId = exerciseViewModel.PatientId});
             }

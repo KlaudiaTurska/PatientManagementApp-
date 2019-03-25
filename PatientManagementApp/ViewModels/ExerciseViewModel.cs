@@ -21,12 +21,15 @@ namespace PatientManagementApp.ViewModels
         public int NumberOfRepetitions { get; set; }
 
         [Display(Name = "Kąt")]
-        [Range(0,360, ErrorMessage = "Wartość kątu powinna być pomiędzy 0 a 180 stopni")]
+        [Range(0,180, ErrorMessage = "Wartość kąta powinna być pomiędzy 0 a 180 stopni")]
         public int Angle { get; set; }
 
         [Display(Name = "Długość ćwiczenia")]
         //[DisplayFormat(DataFormatString = "hh:mm tt")]
         [DataType(DataType.Time)]
         public DateTime Duration { get; set; }
+
+        [Display(Name = "Dodatkowe informacje")]
+        public string AdditionalInformations { get; set; }
     }
 }

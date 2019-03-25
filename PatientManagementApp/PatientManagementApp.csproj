@@ -205,6 +205,10 @@
     <Compile Include="Migrations\201903241727096_Init.Designer.cs">
       <DependentUpon>201903241727096_Init.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201903251656428_AddedExerciseField.cs" />
+    <Compile Include="Migrations\201903251656428_AddedExerciseField.Designer.cs">
+      <DependentUpon>201903251656428_AddedExerciseField.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ApplicationDbContext.cs" />
@@ -303,6 +307,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201903241727096_Init.resx">
       <DependentUpon>201903241727096_Init.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201903251656428_AddedExerciseField.resx">
+      <DependentUpon>201903251656428_AddedExerciseField.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

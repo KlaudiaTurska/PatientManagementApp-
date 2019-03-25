@@ -12,10 +12,11 @@
 </p>
 <table class="table">
     <tr>
-        <th>Opis</th>
+        <th>Opis ćwiczenia</th>
         <th>Liczba powtórzeń</th>
-        <th>Kąt</th>
-        <th>Czas trwania (min)</th>
+        <th>Kąt [°]</th>
+        <th>Okres wykonywania ćwiczenia</th>
+        <th>Dodatkowe informacje</th>
         <th></th>
     </tr>
 
@@ -34,10 +35,17 @@
             @Html.DisplayFor(modelItem => item.Duration)
         </td>
         <td>
-            @Html.ActionLink("Edytuj", "EditExercise", new { id=item.Id }) |
-            @Html.ActionLink("Usuń", "DeleteExercise", new { id=item.Id, patientId = Model.PatientId })
+            @Html.DisplayFor(modelItem => item.AdditionalInformations)
+        </td>
+        <td>
+            @Html.ActionLink("Edytuj", "EditExercise", new { id = item.Id }) |
+            @Html.ActionLink("Usuń", "DeleteExercise", new { id = item.Id, patientId = Model.PatientId })
         </td>
     </tr>
 }
 
 </table>
+
+<div>
+    @Html.ActionLink("Powrót do listy", "PatientList", new { patientId = Model.PatientId })
+</div>
