@@ -178,7 +178,10 @@ namespace PatientManagementApp.Controllers
                         {
                             correctMeasures[i] += 1;
                         }
-                        incorrectMeasures[i] += 1;
+                        else
+                        {
+                            incorrectMeasures[i] += 1;
+                        }
                     }
                 }
             }
