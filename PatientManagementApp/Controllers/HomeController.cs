@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNet.Identity;
+﻿using Highsoft.Web.Mvc.Charts;
+using Microsoft.AspNet.Identity;
 using PatientManagementApp.Models;
 using PatientManagementApp.Repositories;
 using PatientManagementApp.ViewModels;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace PatientManagementApp.Controllers
@@ -14,6 +13,7 @@ namespace PatientManagementApp.Controllers
     {
         private PatientRepository patientRepository;
         private ExerciseRepository exerciseRepository;
+        private GraphRepository graphRepository;
         private ApplicationDbContext context;
 
         public HomeController()
@@ -21,6 +21,7 @@ namespace PatientManagementApp.Controllers
             context = new ApplicationDbContext();
             patientRepository = new PatientRepository(context);
             exerciseRepository = new ExerciseRepository(context);
+            graphRepository = new GraphRepository(context);
         }
 
         public ActionResult Index()
@@ -153,6 +154,41 @@ namespace PatientManagementApp.Controllers
 
             return View(exerciseContainer);
         }
+
+        public ActionResult Statistics(int patientId)
+        {
+            StatisticsViewModel model = new StatisticsViewModel();
+
+            var xSerie = graphRepository.GetXSerie(patientId).ToList();
+            var yData = graphRepository.GetData(patientId).ToList();
+
+            List<double?> correctMeasures = new List<double?>();
+            List<double?> incorrectMeasures = new List<double?>();
+
+            for (int i =0; i < xSerie.Count(); i ++)
+            {
+                correctMeasures.Add(0);
+                incorrectMeasures.Add(0);
+
+                foreach(var y in yData)
+                {
+                    if(y.xValue == xSerie[i])
+                    {
+                        if (y.CorrectMeasure)
+                        {
+                            correctMeasures[i] += 1;
+                        }
+                        incorrectMeasures[i] += 1;
+                    }
+                }
+            }
+            correctMeasures.ForEach(p => model.correctSerie.Add(new ColumnSeriesData { Y = p }));
+            incorrectMeasures.ForEach(p => model.incorrectSerie.Add(new ColumnSeriesData { Y = p }));
+            xSerie.ForEach(p => model.xSerie.Add(p.ToShortDateString()));
+
+            return View(model);
+        }
+
 
         [HttpGet]
         public ActionResult AddExercise(int patientId)

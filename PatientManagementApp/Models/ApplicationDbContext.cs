@@ -7,6 +7,7 @@ namespace PatientManagementApp.Models
     {
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Exercise> Exercises { get; set; }
+        public DbSet<GraphData> GraphData { get; set; }
 
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)

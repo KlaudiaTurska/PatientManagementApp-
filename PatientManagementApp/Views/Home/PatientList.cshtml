@@ -34,6 +34,7 @@
         </td>
         <td>
             @Html.ActionLink("Edycja", "EditPatient", new { id=item.Id }) |
+            @Html.ActionLink("Statystyki", "Statistics", new { patientId = item.Id }) |
             @Html.ActionLink("Lista ćwiczeń", "PatientExersicesList", new { patientId = item.Id }) |
             @Html.ActionLink("Usuń", "DeletePatient", new { id=item.Id })
         </td>
