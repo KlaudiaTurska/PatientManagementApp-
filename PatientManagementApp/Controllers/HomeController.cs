@@ -130,7 +130,7 @@ namespace PatientManagementApp.Controllers
             //Wyciąganięcie listy ćwiczeń dla danego pacjenta
             var exercises = exerciseRepository.GetAllPatientExercises(patientId);
 
-            //Uzupełnienie kontenera id pacjenta oraz utworzenie listy
+            //Utworzenie listy ćwiczeń
             ExerciseContainerViewModel exerciseContainer = new ExerciseContainerViewModel()
             {
                 PatientId = patientId,

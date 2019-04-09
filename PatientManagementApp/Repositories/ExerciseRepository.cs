@@ -38,13 +38,13 @@ namespace PatientManagementApp.Repositories
             context.Exercises.RemoveRange(exercises);
         }
 
-        //Wyszukaj ćwiczenie na podstawie id
+        //Wyszukiwanie ćwiczenia na podstawie id
         public Exercise GetExerciseById(int id)
         {
             return context.Exercises.Where(p => p.Id == id).FirstOrDefault();
         }
 
-        //Zwróc wszystkie ćwiczenia dla danego pacjenta
+        //Zwrócenie wszystkich ćwiczeń dla danego pacjenta
         public IEnumerable<Exercise> GetAllPatientExercises(int id)
         {
             return context.Exercises.Where(u => u.Patient.Id == id).ToList();

@@ -45,7 +45,7 @@ namespace PatientManagementApp.Repositories
             return context.Patients.Where(u => u.Pesel == pesel).FirstOrDefault();
         }
 
-        //Zwraca liste pacjentów dla danego rehabilitanta
+        //Zwrócenie listy pacjentów rehabilitantowi
         public IEnumerable<Patient> GetAllPhysiotherapistPatients(string physiotherapistId)
         {
             return context.Patients.Where(u => u.UserId == physiotherapistId).ToList();

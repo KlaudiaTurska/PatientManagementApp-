@@ -17,7 +17,7 @@
                 {
                     Title = new Title
                     {
-                        Text = "Wykres"
+                        Text = "Liczba wykonanych ćwiczeń w danym dniu"
                     },
                     XAxis = new List<XAxis>
                     {
@@ -33,7 +33,7 @@
                             Min = 0,
                             Title = new YAxisTitle
                             {
-                                Text = "Ilość prób"
+                                Text = "Liczba powtórzeń"
                             },
                             StackLabels = new YAxisStackLabels
                             {
@@ -58,12 +58,12 @@
                     {
                         new ColumnSeries
                         {
-                            Name = "Poprawne ćwiczenie",
+                            Name = "Poprawnie wykonane ćwiczenie",
                             Data = Model.correctSerie
                         },
                         new ColumnSeries
                         {
-                            Name = "Niepoprawne ćwiczenie",
+                            Name = "Niepoprawnie wykonane ćwiczenie",
                             Data = Model.incorrectSerie
                         },
                     }
