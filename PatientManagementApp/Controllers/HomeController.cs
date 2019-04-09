@@ -39,7 +39,7 @@ namespace PatientManagementApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult AddPatient(PatientViewModel patientViewModel)
         {
-            //Sprawdzenie czy model jest zgodny z założeniami
+            //Czy model jest zgodny z założeniami?
             if (ModelState.IsValid)
             {
                 var patient = patientRepository.GetPatientByPesel(patientViewModel.Pesel);
