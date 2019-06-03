@@ -20,8 +20,8 @@ namespace PatientManagementApp.ViewModels
         [Range(1, 150, ErrorMessage = "Liczba powtórzeń powinna być między 1 a 50")]
         public int NumberOfRepetitions { get; set; }
 
-        [Display(Name = "Kąt")]
-        [Range(0,90, ErrorMessage = "Wartość kąta powinna być pomiędzy 0 a 90 stopni")]
+        [Display(Name = "Kąt (10-30°)")]
+        [Range(10,30, ErrorMessage = "Wartość kąta powinna być pomiędzy 10 a 30 stopni")]
         public int Angle { get; set; }
 
         [Display(Name = "Okres wykonywania ćwiczenia")]
