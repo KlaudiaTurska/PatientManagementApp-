@@ -227,7 +227,7 @@ namespace PatientManagementApp.Controllers
                 return RedirectToAction("PatientExersicesList", new { patientId = exerciseViewModel.PatientId });
             }
 
-            return View();
+            return View(exerciseViewModel);
         }
 
         [HttpGet]
