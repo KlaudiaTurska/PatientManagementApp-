@@ -20,10 +20,17 @@ namespace PatientManagementApp.Controllers.Api
             graphRepository = new GraphRepository(context);
         }
 
+        [HttpPost]
         public IHttpActionResult AddDataToExercise(AndroidRequest request)
         {
+            if(request == null)
+            {
+                return NotFound();
+            }
+
             var patient = patientRepository.GetPatientByPesel(request.Pesel);
             var exercise = exerciseRepository.GetExerciseById(request.ExerciseId);
+
             if(patient == null || exercise == null)
             {
                 return NotFound();
@@ -37,7 +44,7 @@ namespace PatientManagementApp.Controllers.Api
                         ExerciseId = exercise.Id,
                         yValue = p,
                         xValue = request.Date,
-                        CorrectMeasure = p > 30 && p > 10 ? true : false,
+                        CorrectMeasure = p < 30 && p > 10 ? true : false,
                     }));
 
             graphRepository.AddGraphData(test);
